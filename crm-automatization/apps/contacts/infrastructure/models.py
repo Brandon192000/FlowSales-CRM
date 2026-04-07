@@ -1,8 +1,16 @@
+
 from django.db import models
 from django.core.validators import MinLengthValidator
 from apps.contacts.domain.constants import ContactType
+from apps.leads.infrastructure.models import Lead
 
 class Contact(models.Model):
+	lead = models.ForeignKey(
+		Lead,
+		on_delete=models.CASCADE,
+		related_name="contacts",
+		verbose_name="Lead",
+	)
 	first_name = models.CharField(
 		max_length=100,
 		validators=[MinLengthValidator(2)],
